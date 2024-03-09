@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B3AA3C01-A622-4A6C-ACFA-C59ED0FBF367}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.api", "src\money.guardian.api\money.guardian.api.csproj", "{149218EC-E32A-4456-B7AA-E715D501748D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.core", "src\money.guardian.core\money.guardian.core.csproj", "{8DAC7764-6CC5-42F2-9354-FEAD66FBEF82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.infrastructure", "src\money.guardian.infrastructure\money.guardian.infrastructure.csproj", "{A66495C2-1B2A-489D-AA3C-403D7A31D69E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.domain", "src\money.guardian.domain\money.guardian.domain.csproj", "{99919B37-E76A-4613-B6DC-60460CD086FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{149218EC-E32A-4456-B7AA-E715D501748D} = {B3AA3C01-A622-4A6C-ACFA-C59ED0FBF367}
+		{8DAC7764-6CC5-42F2-9354-FEAD66FBEF82} = {B3AA3C01-A622-4A6C-ACFA-C59ED0FBF367}
+		{A66495C2-1B2A-489D-AA3C-403D7A31D69E} = {B3AA3C01-A622-4A6C-ACFA-C59ED0FBF367}
+		{99919B37-E76A-4613-B6DC-60460CD086FA} = {B3AA3C01-A622-4A6C-ACFA-C59ED0FBF367}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{149218EC-E32A-4456-B7AA-E715D501748D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149218EC-E32A-4456-B7AA-E715D501748D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{149218EC-E32A-4456-B7AA-E715D501748D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{149218EC-E32A-4456-B7AA-E715D501748D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DAC7764-6CC5-42F2-9354-FEAD66FBEF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DAC7764-6CC5-42F2-9354-FEAD66FBEF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DAC7764-6CC5-42F2-9354-FEAD66FBEF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DAC7764-6CC5-42F2-9354-FEAD66FBEF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A66495C2-1B2A-489D-AA3C-403D7A31D69E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A66495C2-1B2A-489D-AA3C-403D7A31D69E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A66495C2-1B2A-489D-AA3C-403D7A31D69E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A66495C2-1B2A-489D-AA3C-403D7A31D69E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99919B37-E76A-4613-B6DC-60460CD086FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99919B37-E76A-4613-B6DC-60460CD086FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99919B37-E76A-4613-B6DC-60460CD086FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99919B37-E76A-4613-B6DC-60460CD086FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
