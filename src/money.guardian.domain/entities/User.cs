@@ -4,5 +4,4 @@ namespace money.guardian.domain.entities;
 
 public class User : IdentityUser
 {
-    
 }
