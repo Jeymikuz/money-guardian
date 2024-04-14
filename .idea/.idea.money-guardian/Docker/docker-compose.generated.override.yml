@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  money-guardian-api:
+    build:
+      context: "D:\\Projects\\money-guardian"
+      dockerfile: "src/money.guardian.api/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/money.guardian.api.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "jeymikuz/money-guardian-api:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\PeterParker\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\Projects\\money-guardian\\src\\money.guardian.api:/app:rw"
+    - "D:\\Projects\\money-guardian:/src:rw"
+    working_dir: "/app"
