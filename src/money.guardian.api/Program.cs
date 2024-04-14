@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using money.guardian.api.endpoints;
 using money.guardian.api.extensions;
+using money.guardian.infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddCors(x =>
             .AllowAnyHeader()
             .AllowAnyMethod()));
 
+var serviceProvider = builder.Services.BuildServiceProvider();
+var dbContext = serviceProvider.GetService<AppDbContext>();
+await dbContext.Database.MigrateAsync();
 
 var app = builder.Build();
 

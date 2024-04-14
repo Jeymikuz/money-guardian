@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
 import { UserPayload } from "@/app/types/UserPayload";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
@@ -20,6 +20,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
         const loginUrl = process.env.API_URL + "auth/login";
+        console.log(loginUrl)
         try {
           const response = await fetch(loginUrl, {
             method: "POST",
