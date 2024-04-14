@@ -52,6 +52,23 @@ namespace money.guardian.infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExpenseGroups",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Icon = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpenseGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -158,29 +175,6 @@ namespace money.guardian.infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExpenseGroups",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Icon = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExpenseGroups", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExpenseGroups_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Expenses",
                 columns: table => new
                 {
@@ -188,7 +182,7 @@ namespace money.guardian.infrastructure.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     Value = table.Column<decimal>(type: "numeric", nullable: false),
                     GroupId = table.Column<Guid>(type: "uuid", nullable: true),
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "text", nullable: true)
@@ -196,12 +190,6 @@ namespace money.guardian.infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Expenses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Expenses_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Expenses_ExpenseGroups_GroupId",
                         column: x => x.GroupId,
@@ -255,11 +243,6 @@ namespace money.guardian.infrastructure.Migrations
                 name: "IX_Expenses_GroupId",
                 table: "Expenses",
                 column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Expenses_UserId",
-                table: "Expenses",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -287,10 +270,10 @@ namespace money.guardian.infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ExpenseGroups");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "ExpenseGroups");
         }
     }
 }

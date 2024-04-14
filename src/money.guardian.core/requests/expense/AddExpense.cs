@@ -1,16 +1,17 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using money.guardian.core.requests.common;
+using money.guardian.core.common;
+using money.guardian.core.mappers;
 using money.guardian.domain.entities;
 using money.guardian.infrastructure;
 
 namespace money.guardian.core.requests.expense;
 
 public record AddExpenseRequest(string Name, decimal Value, string UserId, string ExpenseGroupId)
-    : IRequest<ExpenseDto>;
+    : IRequest<Result<ExpenseDto>>;
 
-public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, ExpenseDto>
+public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, Result<ExpenseDto>>
 {
     private readonly UserManager<User> _userManager;
     private readonly AppDbContext _appDbContext;
@@ -21,7 +22,7 @@ public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, ExpenseDto>
         _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
     }
 
-    public async Task<ExpenseDto> Handle(AddExpenseRequest request, CancellationToken cancellationToken)
+    public async Task<Result<ExpenseDto>> Handle(AddExpenseRequest request, CancellationToken cancellationToken)
     {
         if (request == null)
             throw new ArgumentNullException(nameof(request));
@@ -36,19 +37,15 @@ public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, ExpenseDto>
         var newExpense = new Expense
         {
             Name = request.Name,
-            User = user,
             Value = request.Value,
-            Group = expenseGroup
+            Group = expenseGroup,
+            UserId = user.Id
         };
 
         await _appDbContext.Expenses.AddAsync(newExpense, cancellationToken);
         await _appDbContext.SaveChangesAsync(cancellationToken);
 
-        return new ExpenseDto(newExpense.Id.ToString(), newExpense.Name, newExpense.Value,
-            newExpense.Group is null
-                ? null
-                : new ExpenseGroupDto(newExpense.Group.Id.ToString(), newExpense.Group.Name,
-                    newExpense.Group.Icon, newExpense.Group.CreatedAt), newExpense.CreatedAt);
+        return ExpenseMapper.ToExpenseDto(newExpense);
     }
 
     private async Task<ExpenseGroup> ResolveExpenseGroup(string expenseGroupId, CancellationToken cancellationToken)

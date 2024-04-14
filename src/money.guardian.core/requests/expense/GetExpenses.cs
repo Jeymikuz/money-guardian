@@ -1,15 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using money.guardian.core.common;
+using money.guardian.core.common.errors;
+using money.guardian.core.mappers;
 using money.guardian.core.requests.common;
 using money.guardian.domain.entities;
 using money.guardian.infrastructure;
 
 namespace money.guardian.core.requests.expense;
 
-public record GetExpensesRequest(string Username) : IRequest<IEnumerable<ExpenseWithGroupDto>>;
+public record GetExpensesRequest(string Username) : IRequest<Result<IEnumerable<ExpenseDto>>>;
 
-public sealed class GetExpensesHandlers : IRequestHandler<GetExpensesRequest, IEnumerable<ExpenseWithGroupDto>>
+public sealed class GetExpensesHandlers : IRequestHandler<GetExpensesRequest, Result<IEnumerable<ExpenseDto>>>
 {
     private readonly AppDbContext _appDbContext;
     private readonly UserManager<User> _userManager;
@@ -20,7 +23,7 @@ public sealed class GetExpensesHandlers : IRequestHandler<GetExpensesRequest, IE
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
     }
 
-    public async Task<IEnumerable<ExpenseWithGroupDto>> Handle(GetExpensesRequest request,
+    public async Task<Result<IEnumerable<ExpenseDto>>> Handle(GetExpensesRequest request,
         CancellationToken cancellationToken)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
@@ -28,22 +31,12 @@ public sealed class GetExpensesHandlers : IRequestHandler<GetExpensesRequest, IE
         var user = await _userManager.FindByNameAsync(request.Username);
 
         if (user is null)
-            return null;
+            return new UnAuthorizedError();
 
         return await _appDbContext.Expenses.Include(x => x.Group)
-            .Where(x => x.User.Id == user.Id)
-            .Select(x => ConvertToDto(x))
+            .Where(x => x.UserId == user.Id)
+            .Select(x => ExpenseMapper.ToExpenseDto(x))
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
-
-    private static ExpenseWithGroupDto ConvertToDto(Expense expense) =>
-        new(expense.Id.ToString(),
-            expense.Name,
-            expense.Value,
-            expense.Group == null
-                ? null
-                : new ExpenseGroupDto(expense.Group.Id.ToString(), expense.Group.Name, expense.Group.Icon,
-                    expense.Group.CreatedAt),
-            expense.CreatedAt);
 }

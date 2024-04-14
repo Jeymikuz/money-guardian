@@ -20,9 +20,9 @@ public static class IocRegistration
         {
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-              Enter 'Bearer' [space] and then your token in the text input below.
-              \r\n\r\nExample: 'Bearer 12345abcdef'",
+                Description = @"JWT Authorization header using the Bearer scheme. 
+                               Enter 'Bearer' [space] and then your token in the text input below.
+                               Example: 'Bearer 12345abcdef'",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
@@ -84,7 +84,8 @@ public static class IocRegistration
             {
                 ValidIssuer = configuration["IdentitySettings:Issuer"],
                 ValidAudience = configuration["IdentitySettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["IdentitySettings:Key"]!)),
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["IdentitySettings:Key"]!)),
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,

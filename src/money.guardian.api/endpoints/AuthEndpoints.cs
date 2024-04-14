@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using money.guardian.api.models;
 using money.guardian.api.models.auth;
 using money.guardian.api.services;
 using money.guardian.core.requests.user;

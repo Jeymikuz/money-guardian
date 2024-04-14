@@ -12,7 +12,7 @@ using money.guardian.infrastructure;
 namespace money.guardian.infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240313205717_Init")]
+    [Migration("20240325214457_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -179,7 +179,6 @@ namespace money.guardian.infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("Value")
@@ -188,8 +187,6 @@ namespace money.guardian.infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Expenses");
                 });
@@ -216,7 +213,6 @@ namespace money.guardian.infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -347,26 +343,7 @@ namespace money.guardian.infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("money.guardian.domain.entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Group");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("money.guardian.domain.entities.ExpenseGroup", b =>
-                {
-                    b.HasOne("money.guardian.domain.entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

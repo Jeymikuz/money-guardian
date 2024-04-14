@@ -6,9 +6,5 @@ public class ExpenseGroup : BaseEntity
 {
     public string Name { get; set; }
     public string Icon { get; set; }
-    
-    public User User { get; set; }
-    
-    [ForeignKey("User")] 
-    public string UserId { get; set; }
+    [ForeignKey("UserId")] public string UserId { get; set; }
 }

@@ -9,10 +9,6 @@ public class ExpenseConfiguration : IEntityTypeConfiguration<Expense>
     public void Configure(EntityTypeBuilder<Expense> builder)
     {
         builder.HasOne(x => x.Group).WithMany().HasForeignKey(x => x.GroupId).IsRequired(false);
-        builder.HasOne(x => x.User)
-            .WithMany()
-            .HasForeignKey(x => x.UserId)
-            .IsRequired();
-        builder.HasIndex(x => x.UserId);
+        builder.HasIndex(x => new { x.CreatedAt, x.UserId });
     }
 }

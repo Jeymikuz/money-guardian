@@ -5,7 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddServices(builder.Configuration);
 
-builder.Services.AddCors(x => x.AddDefaultPolicy(y => y.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddCors(x =>
+    x.AddDefaultPolicy(y =>
+        y.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()));
 
 
 var app = builder.Build();

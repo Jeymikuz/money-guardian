@@ -1,8 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Inter as FontSans } from "next/font/google";
+import "../styles/globals.css";
+import { ThemeProvider } from "next-themes";
+import { cn } from "@/lib/utils";
+import { ModeToggle } from "@/components/ui/ModeToggle";
+import Link from "next/link";
+import AuthProvider from "./providers/AuthProvider";
+import LoginButton from "./login/LoginButton";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +25,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          "flex justify-center bg-gray-950 font-sans",
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <div className="xl:w-1/4 lg:w-1/2 md:w-[60%] sm:w-[70%] w-[80%] dark:bg-gray-900 bg-white min-h-screen">
+              <div className="flex justify-between m-2 px-6">
+                <ModeToggle />
+                <Link href="/">MG</Link>
+                <LoginButton />
+              </div>
+              {children}
+            </div>
+          </AuthProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
