@@ -2,8 +2,8 @@
 services:
   money-guardian-api:
     build:
-      context: "D:\\Projects\\money-guardian"
-      dockerfile: "src/money.guardian.api/Dockerfile"
+      context: "D:\\Projects\\money-guardian\\build"
+      dockerfile: "../src/money.guardian.api/Dockerfile"
       target: "base"
     command: []
     entrypoint:
