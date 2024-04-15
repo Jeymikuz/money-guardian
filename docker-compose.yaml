@@ -1,16 +1,4 @@
-﻿version: "3.8"
-services:
-  money-guardian-api:
-    image: jeymikuz/money-guardian-api:latest
-    build:
-      context: .
-      dockerfile: ../src/money.guardian.api/Dockerfile
-    environment:
-      - ASPNETCORE_URLS=http://+:80
-      - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=mg_main
-    ports:
-      - "5000:80"
-
+﻿services:
   postgres:
     image: postgres:16.2-alpine
     environment:
@@ -19,21 +7,5 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-  
-  money-guardian-frontend:
-    image: jeymikuz/money-guardian-frontend:latest
-    build:
-      context: .
-      dockerfile: ../src/money.guardian.frontend/Dockefile
-    volumes:
-      - /var/lib/web/data
-    environment:
-      - NEXTAUTH_SECRET=somethinfsedafdsfdasf
-      - NEXTAUTH_URL=http://localhost:3000
-      - NEXTAUTH_URL_INTERNAL=http://money-guardian-frontend:3000
-      - API_URL=http://money-guardian-api/api/v1/
-    ports:
-      - "3000:3000"
-
 volumes:
   pgdata:
