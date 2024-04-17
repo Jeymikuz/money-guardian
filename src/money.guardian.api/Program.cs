@@ -13,6 +13,8 @@ builder.Services.AddCors(x =>
             .AllowAnyHeader()
             .AllowAnyMethod()));
 
+
+// temp solution
 var serviceProvider = builder.Services.BuildServiceProvider();
 var dbContext = serviceProvider.GetService<AppDbContext>();
 await dbContext.Database.MigrateAsync();

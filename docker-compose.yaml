@@ -1,6 +1,6 @@
-﻿services:
+﻿﻿services:
   money-guardian-api:
-    image: jeymikuz/money-guardian-api:latest
+    image: jeymikuz/mg-api:latest
     build:
       context: .
       dockerfile: src/money.guardian.api/Dockerfile
@@ -20,7 +20,7 @@
       - pgdata:/var/lib/postgresql/data
   
   money-guardian-frontend:
-    image: jeymikuz/money-guardian-frontend:latest
+    image: jeymikuz/mg-frontend:latest
     build:
       context: .
       dockerfile: src/money.guardian.frontend/Dockefile
@@ -29,7 +29,7 @@
     environment:
       - NEXTAUTH_SECRET=somethinfsedafdsfdasf
       - NEXTAUTH_URL=http://localhost:3000
-      - NEXTAUTH_URL_INTERNAL=http://money-guardian-frontend:3000
+      - NEXTAUTH_URL_INTERNAL=http://localhost:3000
       - API_URL=http://money-guardian-api/api/v1/
     ports:
       - 3000:3000

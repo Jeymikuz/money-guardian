@@ -29,8 +29,4 @@
       <ProjectReference Include="..\money.guardian.infrastructure\money.guardian.infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="middlewares\" />
-    </ItemGroup>
-
 </Project>
