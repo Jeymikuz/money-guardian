@@ -8,6 +8,7 @@ name: mg-frontend image build and publish
 on:
   push:
     branches: [ "develop" ]
+  create:
     tags:
       - '*'
 env:
