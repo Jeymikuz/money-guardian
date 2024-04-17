@@ -8,7 +8,8 @@ name: mg-frontend image build and publish
 on:
   push:
     branches: [ "develop" ]
-    tags: [ 'v*.*.*' ]
+    tags:
+      - '*'
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
