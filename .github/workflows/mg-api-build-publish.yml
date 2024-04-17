@@ -7,9 +7,8 @@ name: mg-api image build and publish
 
 on:
   push:
-    tags: [ 'v*.*.*' ]
-  pull_request:
     branches: [ "develop" ]
+    tags: [ 'v*.*.*' ]
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
