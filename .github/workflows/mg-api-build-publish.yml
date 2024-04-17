@@ -84,3 +84,4 @@ jobs:
            curl --request GET '${{ secrets.COOLIFY_WEBHOOK_MG_API_DEV }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
          else 
            curl --request GET '${{ secrets.COOLIFY_WEBHOOK_MG_API_PROD }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+         fi
