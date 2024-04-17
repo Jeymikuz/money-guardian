@@ -6,11 +6,13 @@ name: mg-frontend image build and publish
 # documentation.
 
 on:
+  workflow_run:
+    workflows:
+      - "Bump version"
+    types:
+      - completed
   push:
     branches: [ "develop" ]
-  create:
-    tags:
-      - '*'
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
