@@ -77,3 +77,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Deploy to Coolify
+        run: | 
+         curl --request GET '${{ secrets.COOLIFY_WEBHOOK_MG_API_PROD }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
