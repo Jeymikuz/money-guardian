@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration", "integration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.integration.tests", "tests\integration\money.guardian.integration.tests\money.guardian.integration.tests.csproj", "{4060D567-73F5-4008-A104-185A1619C2C9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{8FBEA39D-49E1-4D31-89AA-E2AF8974D30A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.core", "tests\unit\money.guardian.core\money.guardian.core.csproj", "{35363B63-402B-4775-B4C5-DF1C42238219}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,8 @@ Global
 		{99919B37-E76A-4613-B6DC-60460CD086FA} = {B3AA3C01-A622-4A6C-ACFA-C59ED0FBF367}
 		{F8B2C8E5-1BA7-4042-BA9F-D9D2A77BE755} = {4116C8DA-C7BA-44C6-8DF8-D3FB1ACF2975}
 		{4060D567-73F5-4008-A104-185A1619C2C9} = {F8B2C8E5-1BA7-4042-BA9F-D9D2A77BE755}
+		{8FBEA39D-49E1-4D31-89AA-E2AF8974D30A} = {4116C8DA-C7BA-44C6-8DF8-D3FB1ACF2975}
+		{35363B63-402B-4775-B4C5-DF1C42238219} = {8FBEA39D-49E1-4D31-89AA-E2AF8974D30A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{149218EC-E32A-4456-B7AA-E715D501748D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -50,5 +56,9 @@ Global
 		{4060D567-73F5-4008-A104-185A1619C2C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4060D567-73F5-4008-A104-185A1619C2C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4060D567-73F5-4008-A104-185A1619C2C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35363B63-402B-4775-B4C5-DF1C42238219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35363B63-402B-4775-B4C5-DF1C42238219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35363B63-402B-4775-B4C5-DF1C42238219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35363B63-402B-4775-B4C5-DF1C42238219}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
