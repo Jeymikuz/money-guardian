@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.integration.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{8FBEA39D-49E1-4D31-89AA-E2AF8974D30A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.core", "tests\unit\money.guardian.core\money.guardian.core.csproj", "{35363B63-402B-4775-B4C5-DF1C42238219}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.guardian.core.tests", "tests\unit\money.guardian.core.tests\money.guardian.core.tests.csproj", "{35363B63-402B-4775-B4C5-DF1C42238219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
