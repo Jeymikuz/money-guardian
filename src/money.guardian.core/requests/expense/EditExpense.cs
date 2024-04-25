@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using money.guardian.core.common;
+using money.guardian.core.common.errors;
 using money.guardian.core.mappers;
+using money.guardian.domain.entities;
 using money.guardian.infrastructure;
 
 namespace money.guardian.core.requests.expense;
@@ -27,14 +29,14 @@ public class EditExpenseHandler : IRequestHandler<EditExpenseRequest, Result<Exp
             .Where(x => x.Id == request.Id && x.UserId == request.UserId)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (request.ExpenseGroupId.HasValue && expense.Group?.Id != request.ExpenseGroupId.GetValueOrDefault())
+        if (CheckIfShouldUpdateGroup(request, expense))
         {
             var expenseGroup =
                 await _appDbContext.ExpenseGroups.FirstOrDefaultAsync(x => x.Id == request.ExpenseGroupId,
                     cancellationToken);
 
             if (expenseGroup is null)
-                return null;
+                return new NotFoundError($"Expense group with id [{request.ExpenseGroupId}] doesn't exists");
 
             expense.Group = expenseGroup;
         }
@@ -46,4 +48,7 @@ public class EditExpenseHandler : IRequestHandler<EditExpenseRequest, Result<Exp
 
         return ExpenseMapper.ToExpenseDto(expense);
     }
+
+    private static bool CheckIfShouldUpdateGroup(EditExpenseRequest request, Expense expense)
+        => request.ExpenseGroupId.HasValue && expense.Group?.Id != request.ExpenseGroupId.GetValueOrDefault();
 }
