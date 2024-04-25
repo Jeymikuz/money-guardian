@@ -27,7 +27,7 @@ public static class ExpenseEndpoints
     private static async Task<Results<Ok<IEnumerable<ExpenseDto>>, BadRequest<string>>> GetByMonth(int month,
         IMediator mediator, IUserAccessor userAccessor)
     {
-        if (month < 1 || month > 12)
+        if (month is < 1 or > 12)
             return TypedResults.BadRequest("Month number should be between 1 and 12");
 
         var userId = userAccessor.GetId();
@@ -93,6 +93,11 @@ public static class ExpenseEndpoints
 
         var result =
             await mediator.Send(new AddExpenseRequest(model.Name, model.Value, userId, model.ExpenseGroupId));
+
+        if (result.IsError)
+        {
+            return TypedResults.BadRequest(result.Error.Message);
+        }
 
         return TypedResults.Ok(result.Value);
     }

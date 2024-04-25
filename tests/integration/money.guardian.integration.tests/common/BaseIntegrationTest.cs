@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using money.guardian.infrastructure;
+using money.guardian.integration.tests.common.seeders;
 
 namespace money.guardian.integration.tests.common;
 
@@ -18,10 +19,7 @@ public class BaseIntegrationTest : IAsyncLifetime
         DbContext = Scope.ServiceProvider.GetService<AppDbContext>()!;
     }
 
-    private Task SeedData()
-    {
-        return Task.CompletedTask;
-    }
+    private async Task SeedData() => await SeedersApplier.Seed(DbContext, Scope);
 
     public virtual async Task InitializeAsync() => await SeedData();
 

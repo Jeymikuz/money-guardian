@@ -8,7 +8,7 @@ namespace money.guardian.api.endpoints;
 public static class AuthEndpoints
 {
     private const string Prefix = "auth";
-
+    
     public static IEndpointRouteBuilder MapAuth(this IEndpointRouteBuilder builder)
     {
         var group = builder.MapGroup(Prefix).WithOpenApi();

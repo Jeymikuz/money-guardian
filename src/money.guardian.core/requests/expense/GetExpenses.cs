@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using money.guardian.core.common;
 using money.guardian.core.common.errors;
 using money.guardian.core.mappers;
-using money.guardian.core.requests.common;
 using money.guardian.domain.entities;
 using money.guardian.infrastructure;
 

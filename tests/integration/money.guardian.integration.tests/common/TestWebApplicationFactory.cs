@@ -37,6 +37,10 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
             }
 
             services.AddDbContext<AppDbContext>(options => { options.UseNpgsql(_dbContainer.GetConnectionString()); });
+
+            var serviceProvider = services.BuildServiceProvider();
+            var appDbContext = serviceProvider.GetService<AppDbContext>();
+            appDbContext.Database.Migrate();
         });
     }
 

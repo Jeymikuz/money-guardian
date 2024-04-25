@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using money.guardian.core.common;
+using money.guardian.core.common.errors;
 using money.guardian.core.mappers;
 using money.guardian.domain.entities;
 using money.guardian.infrastructure;
@@ -13,34 +13,22 @@ public record AddExpenseRequest(string Name, decimal Value, string UserId, strin
 
 public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, Result<ExpenseDto>>
 {
-    private readonly UserManager<User> _userManager;
     private readonly AppDbContext _appDbContext;
 
-    public AddExpenseHandler(UserManager<User> userManager, AppDbContext appDbContext)
+    public AddExpenseHandler(AppDbContext appDbContext)
     {
-        _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
     }
 
     public async Task<Result<ExpenseDto>> Handle(AddExpenseRequest request, CancellationToken cancellationToken)
     {
-        if (request == null)
-            throw new ArgumentNullException(nameof(request));
+        ArgumentNullException.ThrowIfNull(request);
 
         var expenseGroup = await ResolveExpenseGroup(request.ExpenseGroupId, cancellationToken);
+        if (expenseGroup.IsError)
+            return expenseGroup.Error;
 
-        var user = await _userManager.FindByIdAsync(request.UserId);
-
-        if (user is null)
-            throw new ArgumentNullException(nameof(request));
-
-        var newExpense = new Expense
-        {
-            Name = request.Name,
-            Value = request.Value,
-            Group = expenseGroup,
-            UserId = user.Id
-        };
+        var newExpense = NewExpense(request, expenseGroup);
 
         await _appDbContext.Expenses.AddAsync(newExpense, cancellationToken);
         await _appDbContext.SaveChangesAsync(cancellationToken);
@@ -48,14 +36,35 @@ public class AddExpenseHandler : IRequestHandler<AddExpenseRequest, Result<Expen
         return ExpenseMapper.ToExpenseDto(newExpense);
     }
 
-    private async Task<ExpenseGroup> ResolveExpenseGroup(string expenseGroupId, CancellationToken cancellationToken)
+    private static Expense NewExpense(AddExpenseRequest request, Result<ExpenseGroup> expenseGroup)
+        => new()
+        {
+            Name = request.Name,
+            Value = request.Value,
+            Group = expenseGroup.Value,
+            UserId = request.UserId
+        };
+
+    private async Task<Result<ExpenseGroup>> ResolveExpenseGroup(string expenseGroupId,
+        CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(expenseGroupId))
+            return (ExpenseGroup)null;
+
+        return await GetExpenseGroup(expenseGroupId, cancellationToken);
+    }
+
+    private async Task<Result<ExpenseGroup>> GetExpenseGroup(string expenseGroupId,
+        CancellationToken cancellationToken)
     {
         var parseResult = Guid.TryParse(expenseGroupId, out var expenseId);
+        if (!parseResult)
+            return new BaseError("Incorrect id format");
 
-        return parseResult
-            ? await _appDbContext
-                .ExpenseGroups
-                .FirstOrDefaultAsync(x => x.Id == expenseId, cancellationToken)
-            : null;
+        var expenseGroup = await _appDbContext
+            .ExpenseGroups
+            .FirstOrDefaultAsync(x => x.Id == expenseId, cancellationToken);
+
+        return expenseGroup is null ? new NotFoundError($"Expense group with id {expenseId} not found") : expenseGroup;
     }
 }
