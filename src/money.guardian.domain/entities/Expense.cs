@@ -8,6 +8,5 @@ public class Expense : BaseEntity
     public decimal Value { get; set; }
     public ExpenseGroup Group { get; set; }
     public Guid? GroupId { get; set; }
-    [ForeignKey("UserId")]
     public string UserId { get; set; }
 }

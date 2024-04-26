@@ -19,9 +19,9 @@ public class UserSeeder : ISeeder
         }
     }
 
-    private static IEnumerable<(string, string)> FakeUsersEmails() => new[]
-    {
+    private static IEnumerable<(string, string)> FakeUsersEmails() =>
+    [
         (TestDataConstants.User.Email1, TestDataConstants.User.Id1),
         (TestDataConstants.User.Email2, TestDataConstants.User.Id2)
-    };
+    ];
 }

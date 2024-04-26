@@ -15,7 +15,7 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithImage("postgres:16-alpine")
-        .WithDatabase("mgDB")
+        .WithDatabase("mg-test-db")
         .WithUsername("postgres")
         .WithPassword("postgres")
         .Build();
@@ -27,7 +27,7 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureTestServices(services =>
+        builder.ConfigureServices(services =>
         {
             var descriptor = services.SingleOrDefault(x => x.ServiceType == typeof(DbContextOptions<AppDbContext>));
 
@@ -37,10 +37,6 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
             }
 
             services.AddDbContext<AppDbContext>(options => { options.UseNpgsql(_dbContainer.GetConnectionString()); });
-
-            var serviceProvider = services.BuildServiceProvider();
-            var appDbContext = serviceProvider.GetService<AppDbContext>();
-            appDbContext.Database.Migrate();
         });
     }
 
